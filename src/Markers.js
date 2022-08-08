@@ -23,7 +23,7 @@ const Markers = (props) => {
 
 
   useEffect(() => {
-    props.getmap(status, pos);
+    props.getmap(status, pos, map);
   },[pos]);
   //
   return (

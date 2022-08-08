@@ -158,3 +158,15 @@ input[type=text], [type=tel], input[type=textarea] {
   #image {
     display: none;
   }
+
+  .dropdown-menu {
+    position: relative;
+    margin-left: 45px;
+    margin-right: 30px;
+    margin-top: 20px;
+    color: #00c46a;
+  }
+
+  .select-menu {
+    margin-left: 10px;
+  }
