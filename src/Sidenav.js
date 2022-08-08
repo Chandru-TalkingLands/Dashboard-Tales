@@ -23,7 +23,24 @@ import { v4 as uuidv4 } from "uuid";
 function Sidenav(props) {
   // const coordinates = [props.latpoints, props.lngpoints];
   // const bounds = props.center;
+
+  
+
+  const labelOptions = [
+    { label: 'Amenities', value: 'Amenities'},
+    { label: 'Nearby Project', value: 'Nearby Project'}
+  ];
+
+  const [value, setValue] = React.useState('Amenities');
+
+  const handleChange = (e) => {
+    setValue(e.target.value);
+  };
+
   const [pushdata, setpushdata] = useState([]);
+
+  // const northeast = [props.nelat , props.newlng]
+  // const southwest = [props.swlat , props.swlng]
 
   const fileInputRef = useRef(null);
 
@@ -33,6 +50,8 @@ function Sidenav(props) {
     imgdesc: "",
     description: "",
     bounds: [],
+    // northeast:northeast,
+    // southwest:southwest,
     coordinates: [],
   });
 
@@ -129,6 +148,20 @@ function Sidenav(props) {
         <h1>Talking Lands</h1>
       </div>
       <form className="story-form">
+
+        <div className="dropdown-menu">
+          
+          <label> 
+            Choose your story
+            <select className="select-menu" value={value} onChange={handleChange}>
+              {labelOptions.map((option) => (
+                <option value={option.value}>{option.label}</option>
+              ))}
+            </select>
+          </label>
+        </div>
+
+        
         
         <input
           onChange={handle}

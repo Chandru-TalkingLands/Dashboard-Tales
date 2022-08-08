@@ -17,6 +17,11 @@ export const icon = new Icon({
   iconSize: [50, 50]
 });
 
+export const iconMarker = new Icon({
+  iconUrl: "./map-marker-gif-three.gif",
+  iconSize: [110, 80]
+});
+
 const center = [12.971599,77.594566];
 
 
@@ -38,6 +43,12 @@ function Map() {
   const [lngpoints, setlngpoints] = useState()
   const [map,setMap] = useState('')
   const [markerhide,setmarkerhide] = useState(false);
+
+   // Kushal
+  // const [nelat, setnelat] = useState()
+  // const [swlat, setswlat] = useState()
+  // const [swlng, setswlng] = useState()
+  // const [newlng, setnelng] = useState()
 
   // const [clatpoints, setclatpoints] = useState(center.lat)
   // const [clngpoints, setclngpoints] = useState(center.lng)
@@ -63,7 +74,14 @@ function Map() {
     [],
   )
 
-  const getmap = (data,pos)=>{
+  const getmap = (data,pos,map)=>{
+
+
+    // setnelat(map.getBounds()._northEast.lat)
+    // setnelng(map.getBounds()._northEast.lng)
+    // setswlat(map.getBounds()._southWest.lat)
+    // setswlng(map.getBounds()._southWest.lng)
+
     setmarkerhide(data)
     setdynamicpos(pos)
     //if(!latpoints && !lngpoints){
@@ -78,7 +96,9 @@ function Map() {
   return (
     <div id="map" className="map-view">
       <div>
-        <Sidenav latpoints={latpoints} lngpoints={lngpoints} center={center} />  {/*Passing lat-lng to the form*/}
+        <Sidenav latpoints={latpoints} lngpoints={lngpoints} center={center} 
+        // nelat={nelat} newlng={newlng} swlat={swlat} swlng={swlng}
+        />  Passing lat-lng to the form
       </div>
       {/* <Sidenav latpoints={latpoints} lngpoints={lngpoints}/> */}
       <div className="map-container">
@@ -94,6 +114,7 @@ function Map() {
              draggable = "true"
             eventHandlers={eventHandlers}
             //position={position}
+            icon={iconMarker}
             ref={markerRef}>
               <Tooltip>You can also drag the marker to get next location</Tooltip>
             </Marker> : ''}
