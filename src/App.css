@@ -1,0 +1,160 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.sidebar {
+  background-color: rgb(62, 62, 62);;
+  height: 100vh;
+  width: 25%;
+  margin-top: -22px;
+}
+
+.title {
+  text-align: center;
+  color: red;
+  padding-top: 10px;
+  margin-top: 20px;
+}
+
+.leaflet-container {
+  width: 75%;
+  height: 100vh;
+  margin-left: 25%;
+  margin-top: -100vh;
+}
+
+#id {
+  height: 100vh;
+  width: 100vh;
+}
+
+input[type=text], [type=tel], input[type=textarea] {
+  width: 90%;
+  padding: 12px;
+  margin: 2px 1px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+  margin-top: 20px;
+  margin-left: 18px;
+}
+
+#submit-btn {
+  width: 90%;
+  height: 55px;
+  resize: vertical;
+  border: none;
+  border-radius: 8px;
+  background-color: #00c46a;
+  color: #fff;
+  margin-top: 15px;
+  margin-left: 18px;
+}
+
+/*Drag and Drop Design*/
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+.header {
+    color: red;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+  }
+.drag-area{
+    margin-top: 20px;
+    margin-left: 22px;
+    border: 2px dashed #fff;
+    height: 300px;
+    width: 350px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .drag-area.active{
+    border: 2px solid #fff;
+  }
+  .drag-area .icon{
+    font-size: 100px;
+    color: #fff;
+  }
+  .drag-area header{
+    font-size: 20px;
+    font-weight: 500;
+    color: #fff;
+  }
+  .drag-area span{
+    font-size: 25px;
+    font-weight: 500;
+    color: #fff;
+    margin: 10px 0 15px 0;
+  }
+  .drag-area button{
+    padding: 10px 25px;
+    font-size: 20px;
+    font-weight: 500;
+    border: none;
+    outline: none;
+    background: #fff;
+    color: #5256ad;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .drag-area img{
+    height: 100%;
+    width: 50%;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+
+  .ImgUpld {
+    font-family: sans-serif;
+    text-align: center;
+  }
+/* 
+  .map-view {
+    display: flex;
+  } */
+
+  #image {
+    display: none;
+  }
