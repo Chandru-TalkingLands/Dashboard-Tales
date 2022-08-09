@@ -20,6 +20,8 @@ import ToastMsg from "./ToastMsg";
 import { useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
+
+
 function Sidenav(props) {
   // const coordinates = [props.latpoints, props.lngpoints];
   // const bounds = props.center;
@@ -36,31 +38,26 @@ function Sidenav(props) {
     // southwest:southwest,
     coordinates: [],
   });
-  const [blurprevbtn, setblurprevbtn] = useState(false);
-
-
+  const [blurprevbtn, setblurprevbtn] = useState(true);
+  const [num, setnum] = useState(0);
+  const [addnum, setaddnum] = useState(0);
+  const [nxtbtn, setnxtbtn] = useState(false);
   const fileInputRef = useRef(null);
+  const [formvalues, setformvalues] = useState();
 
- 
+  const labelOptions = [
+    { id: 1, label: "Amenities", value: "Amenities" },
+    { id: 2, label: "Nearby Project", value: "Nearby Project" },
+  ];
 
+  // const northeast = [props.nelat , props.newlng]
+  // const southwest = [props.swlat , props.swlng]
 
   //updating form data
   const handleChange = (e) => {
     console.log(e.target.value);
     setValue(e.target.value);
   };
-
-
-  // const northeast = [props.nelat , props.newlng]
-  // const southwest = [props.swlat , props.swlng]
-
-
-  
-
-  const labelOptions = [
-    { label: "Amenities", value: "Amenities" },
-    { label: "Nearby Project", value: "Nearby Project" },
-  ];
 
   function handle(e) {
     const newData = e.target.value;
@@ -96,25 +93,55 @@ function Sidenav(props) {
     }
   };
 
+  //previous button
+  const handlePrevstory = (e) => {
+    e.preventDefault();
+    let val = num - 1;
+    setnum(val);
+
+    // console.log(pushdata[val])
+    setformvalues(pushdata[val]);
+  };
+
+  //change add button and next button dynamically
+  useEffect(() => {
+    if (num != addnum) {
+      setnxtbtn(true);
+    } else {
+      setnxtbtn(false);
+    }
+  }, [addnum, num]);
+
   //Add button or Next button
   const handleAddstory = (e) => {
     e.preventDefault();
-    if (!props?.latpoints) {
-      alert("Please select marker");
+    var val = 0;
+    if (num == addnum) {
+      if (!props?.latpoints) {
+        alert("Please select marker");
+      } else {
+        setpushdata((prev) => [...prev, { ...data, id: uuidv4() }]);
+        alert("Added Story");
+        setData({
+          title: "",
+          img: "",
+          imgdesc: "",
+          description: "",
+        });
+
+        val = num + 1;
+        setnum(val);
+        setaddnum(val);
+        console.log(pushdata[val]);
+        return val + 1;
+      }
     } else {
-      setpushdata((prev) => [...prev, { ...data, id: uuidv4() }]);
-      alert("Added Story");
+      val = num + 1;
+      console.log(val);
+      setnum(val);
+      setformvalues(pushdata[val]);
     }
   };
-
-  useEffect(() => {
-    setData({
-      ...data,
-
-      bounds: props.center,
-      coordinates: [props.latpoints, props.lngpoints],
-    });
-  }, [props.latpoints, props.lngpoints, props.center]);
 
   //push button or final submit button
   const handleOnCLick = async (e) => {
@@ -151,21 +178,28 @@ function Sidenav(props) {
     }
   };
 
-  //updating btn color based on data for prevbtn
+  //setting coordinates and bounds for data
   useEffect(() => {
-    if (pushdata && pushdata.length == 0) {
+    setData({
+      ...data,
+      bounds: props.center,
+      coordinates: [props.latpoints, props.lngpoints],
+    });
+  }, [props.latpoints, props.lngpoints, props.center]);
+
+  //updating btn color based on data for prevbtn
+  // pushdata && pushdata.length == 0 &&
+  useEffect(() => {
+    if (num == 0) {
       setblurprevbtn(true);
     } else {
       setblurprevbtn(false);
     }
-    console.log(pushdata.length);
-  }, [pushdata]);
+  }, [num]);
 
-  //previous button
-  const handlePrevstory = (e) => {
-    e.preventDefault();
-    console.log("Hiii");
-  };
+  // console.log(blurprevbtn)
+  // console.log(num)
+  console.log(pushdata)
 
   return (
     <div className="sidebar">
@@ -182,7 +216,9 @@ function Sidenav(props) {
               onChange={handleChange}
             >
               {labelOptions.map((option) => (
-                <option value={option.value}>{option.label}</option>
+                <option key={option.id} value={option.value}>
+                  {option.label}
+                </option>
               ))}
             </select>
           </label>
@@ -191,14 +227,14 @@ function Sidenav(props) {
         <input
           onChange={handle}
           type="text"
-          value={data.title}
+          value={formvalues && formvalues.title}
           name="title"
           placeholder="Title of the Tale"
         />
         <input
           onChange={handle}
           type="text"
-          value={data.imgdesc}
+          value={formvalues && formvalues.imgdesc}
           placeholder="Imagesdesc"
           name="imgdesc"
         />
@@ -206,7 +242,7 @@ function Sidenav(props) {
           onChange={handle}
           type="text"
           id="story"
-          value={data.description}
+          value={formvalues && formvalues.description}
           name="description"
           placeholder="Enter your story"
           style={{ height: 80 }}
@@ -228,7 +264,7 @@ function Sidenav(props) {
         </button>
 
         <button onClick={handleAddstory} type="click" className="add-btn">
-          Next Story
+          {nxtbtn ? "Next Story" : "Add Story"}
         </button>
 
         <button onClick={handleOnCLick} type="click" id="submit-btn">

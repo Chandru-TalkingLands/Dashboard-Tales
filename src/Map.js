@@ -45,10 +45,10 @@ function Map() {
   const [markerhide,setmarkerhide] = useState(false);
 
    // Kushal
-  // const [nelat, setnelat] = useState()
-  // const [swlat, setswlat] = useState()
-  // const [swlng, setswlng] = useState()
-  // const [newlng, setnelng] = useState()
+  const [nelat, setnelat] = useState()
+  const [swlat, setswlat] = useState()
+  const [swlng, setswlng] = useState()
+  const [newlng, setnelng] = useState()
 
   // const [clatpoints, setclatpoints] = useState(center.lat)
   // const [clngpoints, setclngpoints] = useState(center.lng)
@@ -77,10 +77,10 @@ function Map() {
   const getmap = (data,pos,map)=>{
 
 
-    // setnelat(map.getBounds()._northEast.lat)
-    // setnelng(map.getBounds()._northEast.lng)
-    // setswlat(map.getBounds()._southWest.lat)
-    // setswlng(map.getBounds()._southWest.lng)
+    setnelat(map.getBounds()._northEast.lat)
+    setnelng(map.getBounds()._northEast.lng)
+    setswlat(map.getBounds()._southWest.lat)
+    setswlng(map.getBounds()._southWest.lng)
 
     setmarkerhide(data)
     setdynamicpos(pos)
@@ -97,7 +97,7 @@ function Map() {
     <div id="map" className="map-view">
       <div>
         <Sidenav latpoints={latpoints} lngpoints={lngpoints} center={center} 
-        // nelat={nelat} newlng={newlng} swlat={swlat} swlng={swlng}
+        nelat={nelat} newlng={newlng} swlat={swlat} swlng={swlng}
         />  Passing lat-lng to the form
       </div>
       {/* <Sidenav latpoints={latpoints} lngpoints={lngpoints}/> */}

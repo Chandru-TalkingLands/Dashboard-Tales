@@ -99,16 +99,21 @@ input[type=text], [type=tel], input[type=textarea] {
 }
 
 .edt-btn-blur{
-  /* filter: grayscale; */
+  pointer-events: none;
+  
   width: 40%;
   height: 55px;
   resize: vertical;
   border: none;
   border-radius: 8px;
-  background-color: red;
+  background-color: grey;
   color: #fff;
   margin-top: 15px;
   margin-left: 18px;
+}
+
+.edt-btn-blur :hover{
+  cursor:no-drop;
 }
 
 .edt-btn {
