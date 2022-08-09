@@ -86,6 +86,43 @@ input[type=text], [type=tel], input[type=textarea] {
   margin-left: 18px;
 }
 
+.add-btn {
+  width: 40%;
+  height: 55px;
+  resize: vertical;
+  border: none;
+  border-radius: 8px;
+  background-color: #00c46a;
+  color: #fff;
+  margin-top: 15px;
+  margin-left: 18px;
+}
+
+.edt-btn-blur{
+  /* filter: grayscale; */
+  width: 40%;
+  height: 55px;
+  resize: vertical;
+  border: none;
+  border-radius: 8px;
+  background-color: red;
+  color: #fff;
+  margin-top: 15px;
+  margin-left: 18px;
+}
+
+.edt-btn {
+  width: 40%;
+  height: 55px;
+  resize: vertical;
+  border: none;
+  border-radius: 8px;
+  background-color: #00c46a;
+  color: #fff;
+  margin-top: 15px;
+  margin-left: 18px;
+}
+
 /*Drag and Drop Design*/
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
