@@ -20,12 +20,11 @@ import ToastMsg from "./ToastMsg";
 import { useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
-
-
 function Sidenav(props) {
   // const coordinates = [props.latpoints, props.lngpoints];
   // const bounds = props.center;
 
+  const fileInputRef = useRef(null);
   const [value, setValue] = useState("Amenities");
   const [pushdata, setpushdata] = useState([]);
   const [data, setData] = useState({
@@ -42,8 +41,8 @@ function Sidenav(props) {
   const [num, setnum] = useState(0);
   const [addnum, setaddnum] = useState(0);
   const [nxtbtn, setnxtbtn] = useState(false);
-  const fileInputRef = useRef(null);
   const [formvalues, setformvalues] = useState();
+  const [currentval, setcurrentval] = useState();
 
   const labelOptions = [
     { id: 1, label: "Amenities", value: "Amenities" },
@@ -61,6 +60,7 @@ function Sidenav(props) {
 
   function handle(e) {
     const newData = e.target.value;
+    setcurrentval(newData);
     setData({
       ...data,
       [e.target.name]: newData,
@@ -87,6 +87,7 @@ function Sidenav(props) {
       setData(() => ({
         ...data,
         img: res.data,
+        setnum,
       }));
     } catch (err) {
       console.log(err);
@@ -98,8 +99,6 @@ function Sidenav(props) {
     e.preventDefault();
     let val = num - 1;
     setnum(val);
-
-    // console.log(pushdata[val])
     setformvalues(pushdata[val]);
   };
 
@@ -109,6 +108,7 @@ function Sidenav(props) {
       setnxtbtn(true);
     } else {
       setnxtbtn(false);
+      // setformvalues(currentval)
     }
   }, [addnum, num]);
 
@@ -178,6 +178,35 @@ function Sidenav(props) {
     }
   };
 
+  console.log("Cooool",num,addnum)
+
+  //handling delete
+  const handleDelete = (e, position) => {
+    e.preventDefault();
+    let item = [];
+    pushdata.filter((data) => {
+      if (data.title != pushdata[position].title) {
+        item.push(data);
+      }
+    });
+    setaddnum(addnum - 1)
+    if (position > 1) {
+      let val = position - 1;
+      setformvalues(pushdata[val]);
+    } else if(position <= 1){
+      let val = position + 1;
+      setformvalues(pushdata[val]);
+    }
+    else{
+      setformvalues('');
+    }
+
+    setpushdata(item);
+    console.log(pushdata);
+
+    //  console.log(pushdata[position])
+  };
+
   //setting coordinates and bounds for data
   useEffect(() => {
     setData({
@@ -188,7 +217,6 @@ function Sidenav(props) {
   }, [props.latpoints, props.lngpoints, props.center]);
 
   //updating btn color based on data for prevbtn
-  // pushdata && pushdata.length == 0 &&
   useEffect(() => {
     if (num == 0) {
       setblurprevbtn(true);
@@ -199,7 +227,7 @@ function Sidenav(props) {
 
   // console.log(blurprevbtn)
   // console.log(num)
-  console.log(pushdata)
+  console.log(pushdata);
 
   return (
     <div className="sidebar">
@@ -222,6 +250,8 @@ function Sidenav(props) {
               ))}
             </select>
           </label>
+          <button onClick={(e) => handleDelete(e, num)}>Delete</button>
+          <p>{pushdata && pushdata.length}</p>
         </div>
 
         <input
