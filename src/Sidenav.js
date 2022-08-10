@@ -19,10 +19,16 @@ import { map } from "leaflet";
 import ToastMsg from "./ToastMsg";
 import { useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-
+import ReactCardSlider from './components/ReactCardSlider'
 
 
 function Sidenav(props) {
+
+
+
+  
+
+
   // const coordinates = [props.latpoints, props.lngpoints];
   // const bounds = props.center;
 
@@ -99,6 +105,10 @@ function Sidenav(props) {
     let val = num - 1;
     setnum(val);
 
+
+   
+
+
     // console.log(pushdata[val])
     setformvalues(pushdata[val]);
   };
@@ -114,7 +124,11 @@ function Sidenav(props) {
 
   //Add button or Next button
   const handleAddstory = (e) => {
+    
     e.preventDefault();
+
+    
+
     var val = 0;
     if (num == addnum) {
       if (!props?.latpoints) {
@@ -122,6 +136,7 @@ function Sidenav(props) {
       } else {
         setpushdata((prev) => [...prev, { ...data, id: uuidv4() }]);
         alert("Added Story");
+        
         setData({
           title: "",
           img: "",
@@ -142,6 +157,19 @@ function Sidenav(props) {
       setformvalues(pushdata[val]);
     }
   };
+
+  // Slides objects, hard coded - 
+  const slideClick = (slider) => {
+    alert("You have clicked")
+  }
+
+  const slides = []
+
+  // let slides = [{image:pushdata.img, title:pushdata.title, description:pushdata.description}]
+  // slides.push(
+  
+  // );
+  // return slides;
 
   //push button or final submit button
   const handleOnCLick = async (e) => {
@@ -267,10 +295,20 @@ function Sidenav(props) {
           {nxtbtn ? "Next Story" : "Add Story"}
         </button>
 
+        <div id="slider-body">
+          <ReactCardSlider slides={pushdata} />
+        </div>
+
         <button onClick={handleOnCLick} type="click" id="submit-btn">
-          Push Story
+          Finalize Your Stories
         </button>
+
       </form>
+
+      
+
+      
+
     </div>
   );
 }

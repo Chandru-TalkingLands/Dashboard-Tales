@@ -98,7 +98,7 @@ function Map() {
       <div>
         <Sidenav latpoints={latpoints} lngpoints={lngpoints} center={center} 
         nelat={nelat} newlng={newlng} swlat={swlat} swlng={swlng}
-        />  Passing lat-lng to the form
+        />  
       </div>
       {/* <Sidenav latpoints={latpoints} lngpoints={lngpoints}/> */}
       <div className="map-container">
