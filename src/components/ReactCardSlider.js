@@ -27,15 +27,18 @@ const ReactCardSlider = (props) => {
             <div id="slider">
                 {
                     props.slides.map((slide, index) => {
+                        console.log(slide)
                         return (
                             <div className="slider-card" key={index} onClick={() => slide.clickEvent()}>
 
                                 <div className="slider-card-image" style={{ backgroundImage: `url(${slide.image})`, backgroundSize: 'cover' }}></div>
-                                <Button className="btn" variant="outlined" startIcon={<DeleteIcon/>}>
+                                {/* <Button className="btn" variant="outlined" startIcon={<DeleteIcon/>}>
                                     Delete
-                                </Button>
+                                </Button> */}
+                                <div>
                                 <p className="slider-card-title">{slide.title}</p>
                                 <p className="slider-card-description">{slide.description}</p>
+                                </div>
                             </div>
                         )
                     })

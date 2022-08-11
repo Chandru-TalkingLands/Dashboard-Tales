@@ -76,6 +76,7 @@
   height: 100vh;
   margin-left: 25%;
   margin-top: -100vh;
+  
 }
 
 #id {
@@ -122,6 +123,10 @@ input[type=text], [type=tel], input[type=textarea] {
   margin-top: 15px;
   margin-left: 18px;
   cursor: pointer;
+}
+
+.add-btn:hover {
+  background-color: #178b55;
 }
 
 .edt-btn-blur{
@@ -213,6 +218,7 @@ input[type=text], [type=tel], input[type=textarea] {
     width: 50%;
     object-fit: cover;
     border-radius: 5px;
+    
   }
 
   .ImgUpld {
@@ -248,3 +254,23 @@ input[type=text], [type=tel], input[type=textarea] {
   margin-left: 8px;
   margin-right: 8px;
 }
+
+.choosefile-div {
+  margin-top: 16px;
+  margin-left: 25%;
+  margin-right: 25%;
+}
+
+.count {
+  margin-left: 35%;
+  margin-top: 12px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #00c46a;
+}
+
+.delete-btn {
+  width: 100px;
+  height: 30px;
+}
+

@@ -18,8 +18,8 @@ export const icon = new Icon({
 });
 
 export const iconMarker = new Icon({
-  iconUrl: "./map-marker-gif-three.gif",
-  iconSize: [110, 80]
+  iconUrl: "./giphy-marker.gif",
+  iconSize: [80, 80]
 });
 
 const center = [12.971599,77.594566];

@@ -1,11 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Marker, useMap } from "react-leaflet";
 import { Icon, map } from "leaflet";
+import Plot from './images/Plot.svg'
+
+// export const icon = new Icon({
+//   iconUrl: "./glowing-dot.png",
+//   iconSize: [50, 50],
+// });
 
 export const icon = new Icon({
-  iconUrl: "./glowing-dot.png",
-  iconSize: [50, 50],
+  iconUrl: Plot,
+  iconSize: [70, 70],
 });
+
 
 const center = [12.971599, 77.594566];
 

@@ -19,8 +19,14 @@ import { map } from "leaflet";
 import ToastMsg from "./ToastMsg";
 import { useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+// <<<<<<< HEAD
 import ReactCardSlider from './components/ReactCardSlider'
 
+import Button from '@mui/material/Button';
+import DeleteIcon from '@mui/icons-material/Delete';
+
+// =======
+// >>>>>>> 537319db6d11fd7500d44e35dea5ae8608128a9c
 
 function Sidenav(props) {
 
@@ -32,6 +38,7 @@ function Sidenav(props) {
   // const coordinates = [props.latpoints, props.lngpoints];
   // const bounds = props.center;
 
+  const fileInputRef = useRef(null);
   const [value, setValue] = useState("Amenities");
   const [pushdata, setpushdata] = useState([]);
   const [data, setData] = useState({
@@ -48,8 +55,8 @@ function Sidenav(props) {
   const [num, setnum] = useState(0);
   const [addnum, setaddnum] = useState(0);
   const [nxtbtn, setnxtbtn] = useState(false);
-  const fileInputRef = useRef(null);
   const [formvalues, setformvalues] = useState();
+  const [currentval, setcurrentval] = useState();
 
   const labelOptions = [
     { id: 1, label: "Amenities", value: "Amenities" },
@@ -67,6 +74,7 @@ function Sidenav(props) {
 
   function handle(e) {
     const newData = e.target.value;
+    setcurrentval(newData);
     setData({
       ...data,
       [e.target.name]: newData,
@@ -86,30 +94,39 @@ function Sidenav(props) {
 
     try {
       const res = await axios.post(
-        `http://localhost:7000/upload/${property_name}/${sub_folder}/${category_name}`,
+        `http://localhost:7777/upload/${property_name}/${sub_folder}/${category_name}`,
         formData
       );
       console.log(res.data);
+
+      var link = "https://rdfolder.s3.ap-south-1.amazonaws.com/ "
       setData(() => ({
         ...data,
-        img: res.data,
+        img: link+res.data,
+        setnum,
       }));
+      // Initalizing t variabke with img response and parent link of aws
+      // var t = link+res.data;
     } catch (err) {
       console.log(err);
+      
     }
   };
-
+  
   //previous button
   const handlePrevstory = (e) => {
     e.preventDefault();
     let val = num - 1;
     setnum(val);
+// <<<<<<< HEAD
 
 
    
 
 
     // console.log(pushdata[val])
+// =======
+// >>>>>>> 537319db6d11fd7500d44e35dea5ae8608128a9c
     setformvalues(pushdata[val]);
   };
 
@@ -119,6 +136,7 @@ function Sidenav(props) {
       setnxtbtn(true);
     } else {
       setnxtbtn(false);
+      // setformvalues(currentval)
     }
   }, [addnum, num]);
 
@@ -163,7 +181,7 @@ function Sidenav(props) {
     alert("You have clicked")
   }
 
-  const slides = []
+  const slides = {pushdata}
 
   // let slides = [{image:pushdata.img, title:pushdata.title, description:pushdata.description}]
   // slides.push(
@@ -182,9 +200,10 @@ function Sidenav(props) {
       let sub_folder = "Tales";
       let category_name = value;
       console.log(pushdata, "dataaaa");
+      
       axios
         .post(
-          `http://localhost:7000/create/json/${property_name}/${sub_folder}/${category_name}`,
+          `http://localhost:7777/create/json/${property_name}/${sub_folder}/${category_name}`,
           pushdata
         )
         .then((res) => {
@@ -206,6 +225,35 @@ function Sidenav(props) {
     }
   };
 
+  console.log("Cooool",num,addnum)
+
+  //handling delete
+  const handleDelete = (e, position) => {
+    e.preventDefault();
+    let item = [];
+    pushdata.filter((data) => {
+      if (data.title != pushdata[position].title) {
+        item.push(data);
+      }
+    });
+    setaddnum(addnum - 1)
+    if (position > 1) {
+      let val = position - 1;
+      setformvalues(pushdata[val]);
+    } else if(position <= 1){
+      let val = position + 1;
+      setformvalues(pushdata[val]);
+    }
+    else{
+      setformvalues('');
+    }
+
+    setpushdata(item);
+    console.log(pushdata);
+
+    //  console.log(pushdata[position])
+  };
+
   //setting coordinates and bounds for data
   useEffect(() => {
     setData({
@@ -216,7 +264,6 @@ function Sidenav(props) {
   }, [props.latpoints, props.lngpoints, props.center]);
 
   //updating btn color based on data for prevbtn
-  // pushdata && pushdata.length == 0 &&
   useEffect(() => {
     if (num == 0) {
       setblurprevbtn(true);
@@ -227,7 +274,7 @@ function Sidenav(props) {
 
   // console.log(blurprevbtn)
   // console.log(num)
-  console.log(pushdata)
+  console.log(pushdata);
 
   return (
     <div className="sidebar">
@@ -250,6 +297,14 @@ function Sidenav(props) {
               ))}
             </select>
           </label>
+          {/* <button onClick={(e) => handleDelete(e, num)}>Delete</button> */}
+          <Button style={{"backgroundColor":"red", "marginTop":"12px", "marginLeft":"90px", "marginRight":"40px"}} className="delete-btn" onClick={(e) => handleDelete(e, num)} variant="contained" startIcon={<DeleteIcon />}>
+        Delete
+      </Button>
+          {/* <p>{pushdata && pushdata.length}</p> */}
+        </div>
+        <div className="count">
+        <p>Tales Count: {pushdata && pushdata.length}</p>
         </div>
 
         <input
@@ -265,6 +320,7 @@ function Sidenav(props) {
           value={formvalues && formvalues.imgdesc}
           placeholder="Imagesdesc"
           name="imgdesc"
+          hidden
         />
         <input
           onChange={handle}
@@ -275,14 +331,14 @@ function Sidenav(props) {
           placeholder="Enter your story"
           style={{ height: 80 }}
         />
-        <input
-          type="file"
-          multiple={true}
-          ref={fileInputRef}
-          name="img"
-          onChange={handleImage}
-        />
-
+        <div className="choosefile-div">
+         <input
+            type="file"
+            multiple={true}
+            ref={fileInputRef}
+            name="img"
+            onChange={handleImage}/>
+        </div>
         <button
           onClick={handlePrevstory}
           type="click"
@@ -296,7 +352,7 @@ function Sidenav(props) {
         </button>
 
         <div id="slider-body">
-          <ReactCardSlider slides={pushdata} />
+          {pushdata.length===0 ? <p></p> : <ReactCardSlider slides={pushdata} />}
         </div>
 
         <button onClick={handleOnCLick} type="click" id="submit-btn">
