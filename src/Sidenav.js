@@ -88,7 +88,7 @@ function Sidenav(props) {
     const formData = new FormData();
     formData.append("file", imgName);
 
-    let property_name = "Banglore";
+    let property_name = "Talking";
     let sub_folder = "Tales";
     let category_name = value;
 
@@ -98,15 +98,19 @@ function Sidenav(props) {
         formData
       );
       console.log(res.data);
+      
 
-      var link = "https://rdfolder.s3.ap-south-1.amazonaws.com/ "
+      var link = "https://rdfolder.s3.ap-south-1.amazonaws.com/"
+      var t = link+res.data;
+      console.log(t)
       setData(() => ({
         ...data,
         img: link+res.data,
         setnum,
       }));
       // Initalizing t variabke with img response and parent link of aws
-      // var t = link+res.data;
+      var t = link+res.data;
+      
     } catch (err) {
       console.log(err);
       
@@ -196,7 +200,7 @@ function Sidenav(props) {
       alert("Please select marker");
     } else {
       console.log(pushdata);
-      let property_name = "Banglore";
+      let property_name = "Talking";
       let sub_folder = "Tales";
       let category_name = value;
       console.log(pushdata, "dataaaa");
@@ -354,6 +358,8 @@ function Sidenav(props) {
         <div id="slider-body">
           {pushdata.length===0 ? <p></p> : <ReactCardSlider slides={pushdata} />}
         </div>
+
+        
 
         <button onClick={handleOnCLick} type="click" id="submit-btn">
           Finalize Your Stories

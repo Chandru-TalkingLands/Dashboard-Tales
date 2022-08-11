@@ -31,7 +31,7 @@ const ReactCardSlider = (props) => {
                         return (
                             <div className="slider-card" key={index} onClick={() => slide.clickEvent()}>
 
-                                <div className="slider-card-image" style={{ backgroundImage: `url(${slide.image})`, backgroundSize: 'cover' }}></div>
+                                <div className="slider-card-image" style={{ backgroundImage: `url(${slide.img})`, backgroundSize: 'cover' }}></div>
                                 {/* <Button className="btn" variant="outlined" startIcon={<DeleteIcon/>}>
                                     Delete
                                 </Button> */}
