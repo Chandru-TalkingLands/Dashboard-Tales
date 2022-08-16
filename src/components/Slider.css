@@ -54,12 +54,14 @@
 }
 .slider-card {
     width: 320px;
-    height: 300px;
+    /* height: 300px; */
+    height: fit-content;
     background: white;
     border-radius: 10px;
     display: inline-block;
     margin-left: 5px;
     margin-right: 5px;
+    padding-bottom: 10px;
     box-shadow: 2px 2px 2px 2px rbg(0 0 0 / 12%);
     cursor: pointer;
 }
@@ -74,6 +76,7 @@
     font-size: large;
     font-family: 'Lato', sans-serif;
     margin-top: 10px;
+    margin-right: 20px;
 }
 
 .slider-card-description {
@@ -81,4 +84,8 @@
     font-size: 13px;
     opacity: 0.5;
 }
+ #w74 {
+    word-wrap: break-word;
+    white-space: pre-line;
+ }
 

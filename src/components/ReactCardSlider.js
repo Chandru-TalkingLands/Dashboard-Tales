@@ -35,7 +35,7 @@ const ReactCardSlider = (props) => {
                                 {/* <Button className="btn" variant="outlined" startIcon={<DeleteIcon/>}>
                                     Delete
                                 </Button> */}
-                                <div>
+                                <div id="w74">
                                 <p className="slider-card-title">{slide.title}</p>
                                 <p className="slider-card-description">{slide.description}</p>
                                 </div>
