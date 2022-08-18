@@ -39,16 +39,51 @@
 
 .sidebar {
   background-color: rgb(62, 62, 62);;
-  height: 100vh;
   width: 25%;
   margin-top: -22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  /* position: fixed; */
+  overflow-y: scroll;
+  height: 100vh;
+  align-items: center;
 }
 
 .title {
   text-align: center;
   color: red;
   padding-top: 10px;
-  margin-top: 20px;
+  margin-top: 10px;
+}
+
+.story-form{
+  display: flex;
+  flex-direction: column;
+}
+
+.view-edit-card{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color:rgb(62, 62, 62);
+  /* border-radius: 8px ; */
+}
+
+.view-edit-form{
+  /* display: flex;
+  flex-direction: column;
+  gap: 10px; */
+  background-color:#fff;
+  border-radius: 8px ;
+  width: 300px;
+  height: 210px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.dropdown-menu{
+  display: flex;
 }
 
 .leaflet-container {
@@ -75,16 +110,25 @@ input[type=text], [type=tel], input[type=textarea] {
 }
 
 #submit-btn {
-  width: 90%;
-  height: 55px;
-  resize: vertical;
-  border: none;
-  border-radius: 8px;
-  background-color: #00c46a;
-  color: #fff;
-  margin-top: 15px;
-  margin-left: 18px;
+  width: 300PX;
+    height: 55px;
+    border: none;
+    border-radius: 10px;
+    background-color: #00c46a;
+    color: #fff;
+   
 }
+
+.view-edit-card input{
+  /* background-color: transparent; */
+  /* border: none; */
+  /* border-bottom: 1px solid grey; */
+  /* padding: 0; */
+  /* margin: 0; */
+  /* border-radius: 0; */
+}
+
+
 
 .add-btn {
   width: 40%;
