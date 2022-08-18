@@ -44,10 +44,13 @@ function Sidenav(props) {
   const [formvalues, setformvalues] = useState();
   const [currentval, setcurrentval] = useState();
 
+
   const labelOptions = [
     { id: 1, label: "Amenities", value: "Amenities" },
     { id: 2, label: "Nearby Project", value: "Nearby Project" },
   ];
+
+  var Imageurl = `https://rdfolder.s3.ap-south-1.amazonaws.com/`;
 
   // const northeast = [props.nelat , props.newlng]
   // const southwest = [props.swlat , props.swlng]
@@ -58,13 +61,30 @@ function Sidenav(props) {
     setValue(e.target.value);
   };
 
+  //handling all inputs
   function handle(e) {
     const newData = e.target.value;
+    // console.log(e.target.value)
     setcurrentval(newData);
     setData({
       ...data,
       [e.target.name]: newData,
     });
+
+    
+    if (e.target.value) {
+      setformvalues({
+        [e.target.name]: e.target.value,
+      });
+      const data = pushdata.map((val) => {
+        if (val.id == pushdata[num]?.id) {
+          console.log();
+          pushdata[num] = { ...pushdata[num], [e.target.name]: e.target.value };
+        }
+      });
+    } else {
+      setformvalues({ [e.target.name]: "" });
+    }
   }
 
   //Adding image to S3 and updating that link to json data
@@ -117,8 +137,9 @@ function Sidenav(props) {
     e.preventDefault();
     var val = 0;
     if (num == addnum) {
-      if (!props?.latpoints) {
-        alert("Please select marker");
+      if (!props?.latpoints ) {
+        // console.log(data.img
+        alert("Please select marker and Image");
       } else {
         setpushdata((prev) => [...prev, { ...data, id: uuidv4() }]);
         alert("Added Story");
@@ -132,7 +153,7 @@ function Sidenav(props) {
         val = num + 1;
         setnum(val);
         setaddnum(val);
-        console.log(pushdata[val]);
+        // console.log(pushdata[val]);
         return val + 1;
       }
     } else {
@@ -142,6 +163,7 @@ function Sidenav(props) {
       setformvalues(pushdata[val]);
     }
   };
+
 
   //push button or final submit button
   const handleOnCLick = async (e) => {
@@ -167,44 +189,49 @@ function Sidenav(props) {
           console.log(err);
         });
       alert("Added all Stories");
-      setData({
-        title: "",
-        img: "",
-        imgdesc: "",
-        description: "",
-        bounds: [],
-        coordinates: [],
-      });
+      
     }
   };
-
-  console.log("Cooool",num,addnum)
 
   //handling delete
   const handleDelete = (e, position) => {
     e.preventDefault();
+    console.log(position);
+    let property_name = "Banglore";
+    let sub_folder = "Tales";
+    let category_name = value;
+    let imgKey = pushdata[position]?.img;
+    let imglength = imgKey.split("/").length;
+    let file_key = imgKey.split("/")[imglength - 1];
+    console.log(file_key);
+    axios
+      .delete(
+        `http://localhost:7000/delete/file/${property_name}/${sub_folder}/${category_name}/${file_key}`
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
     let item = [];
     pushdata.filter((data) => {
       if (data.title != pushdata[position].title) {
         item.push(data);
       }
     });
-    setaddnum(addnum - 1)
+    setaddnum(addnum - 1);
     if (position > 1) {
       let val = position - 1;
       setformvalues(pushdata[val]);
-    } else if(position <= 1){
+    } else if (position <= 1) {
       let val = position + 1;
       setformvalues(pushdata[val]);
-    }
-    else{
-      setformvalues('');
+    } else {
+      setformvalues("");
     }
 
     setpushdata(item);
     console.log(pushdata);
-
-    //  console.log(pushdata[position])
+    alert("Deleted Successfully");
   };
 
   //setting coordinates and bounds for data
@@ -225,18 +252,29 @@ function Sidenav(props) {
     }
   }, [num]);
 
-  // console.log(blurprevbtn)
-  // console.log(num)
-  console.log(pushdata);
+
+  //checking code for Inputs
+  const handleInputs = (e,data)=>{
+    console.log(e.target.value) 
+    pushdata.map(item =>{
+      if(item.id == data.id){
+        console.log("Hiiiii IAM IN")
+        
+      }
+    })
+  }
+
+  
 
   return (
     <div className="sidebar">
       <div className="title">
         <h1>Talking Lands</h1>
       </div>
-      <form className="story-form">
+
+      <div className="story-form">
         <div className="dropdown-menu">
-          <label>
+          {/* <label>
             Choose your story
             <select
               className="select-menu"
@@ -249,58 +287,74 @@ function Sidenav(props) {
                 </option>
               ))}
             </select>
-          </label>
-          <button onClick={(e) => handleDelete(e, num)}>Delete</button>
+          </label> */}
+          <button onClick={(e) => handleDelete(e,num)}>Delete</button>
           <p>{pushdata && pushdata.length}</p>
         </div>
 
-        <input
-          onChange={handle}
-          type="text"
-          value={formvalues && formvalues.title}
-          name="title"
-          placeholder="Title of the Tale"
-        />
-        <input
+        <form>
+          <input
+            onChange={handle}
+            type="text"
+            value={formvalues && formvalues.title}
+            name="title"
+            placeholder="Title of the Tale"
+          />
+          {/* <input
           onChange={handle}
           type="text"
           value={formvalues && formvalues.imgdesc}
           placeholder="Imagesdesc"
           name="imgdesc"
-        />
-        <input
-          onChange={handle}
-          type="text"
-          id="story"
-          value={formvalues && formvalues.description}
-          name="description"
-          placeholder="Enter your story"
-          style={{ height: 80 }}
-        />
-        <input
-          type="file"
-          multiple={true}
-          ref={fileInputRef}
-          name="img"
-          onChange={handleImage}
-        />
+        /> */}
+          <input
+            onChange={handle}
+            type="textarea"
+            value={formvalues && formvalues.description}
+            name="description"
+            placeholder="Enter your story"
+            // style={{ height: 80 }}
+          />
+          <input
+            type="file"
+            multiple={true}
+            ref={fileInputRef}
+            name="img"
+            onChange={handleImage}
+          />
 
-        <button
-          onClick={handlePrevstory}
-          type="click"
-          className={blurprevbtn ? "edt-btn-blur" : "edt-btn"}
-        >
-          Prev Story
-        </button>
+          <button
+            onClick={handlePrevstory}
+            type="click"
+            className={blurprevbtn ? "edt-btn-blur" : "edt-btn"}
+          >
+            Prev Story
+          </button>
 
-        <button onClick={handleAddstory} type="click" className="add-btn">
-          {nxtbtn ? "Next Story" : "Add Story"}
-        </button>
+          <button onClick={handleAddstory} type="click" className="add-btn">
+            {nxtbtn ? "Next Story" : "Add Story"}
+          </button>
+        </form>
+      </div>
 
-        <button onClick={handleOnCLick} type="click" id="submit-btn">
-          Push Story
-        </button>
-      </form>
+      <div className="view-edit-card" >
+        {pushdata.map((data) => {
+          // setupdateinputs(data)
+          return (
+            <div key={data.id} className="view-edit-form" style={{backgroundImage:`url(${Imageurl + data.img})`}}>
+              <form>
+                <input  type="text" placeholder="Title " name="title" value={data.title} onChange={(e)=>handleInputs(e,data)}/>
+                <input type="text" placeholder="Description" description="description" value={data.description} onChange={(e)=>handleInputs(e,data)}/>
+                {/* <img src={Imageurl + data.img} width="150px" height="200px" /> */}
+              </form>
+            </div>
+          );
+        })}
+      </div>
+
+      <button onClick={handleOnCLick} type="click" id="submit-btn">
+        Push Story
+      </button>
     </div>
   );
 }
